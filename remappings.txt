@@ -1,4 +1,3 @@
-aave-delivery-infrastructure/=lib/aave-delivery-infrastructure/src/
 solidity-utils/=lib/aave-delivery-infrastructure/lib/solidity-utils/src/
 forge-std/=lib/aave-helpers/lib/forge-std/src/
 openzeppelin-contracts/=lib/aave-delivery-infrastructure/lib/solidity-utils/lib/openzeppelin-contracts-upgradeable/lib/openzeppelin-contracts/
