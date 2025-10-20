@@ -10,7 +10,6 @@ import {TransparentProxyFactory} from 'solidity-utils/contracts/transparent-prox
 import {IGovernancePowerStrategy} from '../src/interfaces/IGovernancePowerStrategy.sol';
 import {IVotingPortal} from '../src/interfaces/IVotingPortal.sol';
 import {IVotingMachineWithProofs} from '../src/contracts/voting/interfaces/IVotingMachineWithProofs.sol';
-import {ICrossChainForwarder} from 'aave-delivery-infrastructure/contracts/interfaces/ICrossChainForwarder.sol';
 import {Errors} from '../src/contracts/libraries/Errors.sol';
 import {IBaseVotingStrategy} from '../src/interfaces/IBaseVotingStrategy.sol';
 

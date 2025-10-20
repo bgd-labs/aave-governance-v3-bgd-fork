@@ -5,7 +5,7 @@ import 'forge-std/Test.sol';
 import {IVotingPortal} from '../src/interfaces/IVotingPortal.sol';
 import {ChainIds} from 'solidity-utils/contracts/utils/ChainHelpers.sol';
 import {VotingPortal, IGovernanceCore, IVotingMachineWithProofs} from '../src/contracts/VotingPortal.sol';
-import {ICrossChainForwarder} from 'aave-delivery-infrastructure/contracts/interfaces/ICrossChainForwarder.sol';
+import {ICrossChainForwarder} from '../src/interfaces/ICrossChainForwarder.sol';
 import {ICrossChainReceiver} from 'aave-delivery-infrastructure/contracts/interfaces/ICrossChainReceiver.sol';
 import {Errors} from '../src/contracts/libraries/Errors.sol';
 import {Ownable} from 'openzeppelin-contracts/contracts/access/Ownable.sol';
@@ -58,7 +58,16 @@ contract VotingPortalTest is Test {
   }
 
   function testContractCreationWhenInvalidOwner() public {
-    vm.expectRevert(bytes((abi.encodeWithSelector(Ownable.OwnableInvalidOwner.selector, address(0)))));
+    vm.expectRevert(
+      bytes(
+        (
+          abi.encodeWithSelector(
+            Ownable.OwnableInvalidOwner.selector,
+            address(0)
+          )
+        )
+      )
+    );
     votingPortal = new VotingPortal(
       CROSS_CHAIN_CONTROLLER,
       GOVERNANCE,
@@ -130,7 +139,14 @@ contract VotingPortalTest is Test {
     vm.assume(randomDude != votingPortal.owner());
     vm.startPrank(randomDude);
 
-    vm.expectRevert(bytes(abi.encodeWithSelector(Ownable.OwnableUnauthorizedAccount.selector, randomDude)));
+    vm.expectRevert(
+      bytes(
+        abi.encodeWithSelector(
+          Ownable.OwnableUnauthorizedAccount.selector,
+          randomDude
+        )
+      )
+    );
     votingPortal.setStartVotingGasLimit(newGasLimit);
     vm.stopPrank();
   }

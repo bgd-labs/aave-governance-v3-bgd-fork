@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: BUSL-1.1
 pragma solidity ^0.8.0;
 
-import {ICrossChainForwarder} from 'aave-delivery-infrastructure/contracts/interfaces/ICrossChainForwarder.sol';
+import {ICrossChainForwarder} from '../interfaces/ICrossChainForwarder.sol';
 
 struct PayloadArgs {
   address cross_chain_controller;
