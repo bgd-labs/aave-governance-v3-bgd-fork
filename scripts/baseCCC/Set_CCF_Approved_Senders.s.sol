@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: BUSL-1.1
 pragma solidity ^0.8.0;
 
-import {ICrossChainForwarder} from 'aave-delivery-infrastructure/contracts/interfaces/ICrossChainForwarder.sol';
+import {ICrossChainForwarder} from './ICrossChainForwarder.sol';
 import '../GovBaseScript.sol';
 
 /**
@@ -10,7 +10,11 @@ import '../GovBaseScript.sol';
 abstract contract BaseSetCCFApprovedSenders is GovBaseScript {
   function getSendersToApprove() public virtual returns (address[] memory);
 
-  function _execute(GovDeployerHelpers.Addresses memory addresses) internal override {
-    ICrossChainForwarder(addresses.crossChainController).approveSenders(getSendersToApprove());
+  function _execute(
+    GovDeployerHelpers.Addresses memory addresses
+  ) internal override {
+    ICrossChainForwarder(addresses.crossChainController).approveSenders(
+      getSendersToApprove()
+    );
   }
 }
