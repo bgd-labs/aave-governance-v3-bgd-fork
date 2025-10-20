@@ -1,0 +1,8 @@
+{
+  "lib/aave-delivery-infrastructure": {
+    "rev": "656b87642ba119961c4643e0e2a1f28209e6bae2"
+  },
+  "lib/aave-helpers": {
+    "rev": "558363a7b643986e2650519edf2e00e25ef36eb0"
+  }
+}
