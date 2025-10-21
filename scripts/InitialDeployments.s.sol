@@ -381,6 +381,6 @@ contract Xlayer is BaseInitialDeployment {
   }
 
   // function CROSS_CHAIN_CONTROLLER() public pure override returns (address) {
-  //   return GovernanceV3Bob.CROSS_CHAIN_CONTROLLER;
+  //   return address(0);
   // }
 }
