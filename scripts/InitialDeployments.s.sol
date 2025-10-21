@@ -19,6 +19,7 @@ import {GovernanceV3Ink} from 'aave-address-book/GovernanceV3Ink.sol';
 import {GovernanceV3Soneium} from 'aave-address-book/GovernanceV3Soneium.sol';
 import {GovernanceV3Plasma} from 'aave-address-book/GovernanceV3Plasma.sol';
 import {GovernanceV3Celo} from 'aave-address-book/GovernanceV3Celo.sol';
+import {GovernanceV3Bob} from 'aave-address-book/GovernanceV3Bob.sol';
 import {MiscEthereum} from 'aave-address-book/MiscEthereum.sol';
 import {MiscPolygon} from 'aave-address-book/MiscPolygon.sol';
 import {MiscAvalanche} from 'aave-address-book/MiscAvalanche.sol';
@@ -37,6 +38,7 @@ import {MiscInk} from 'aave-address-book/MiscInk.sol';
 import {MiscSoneium} from 'aave-address-book/MiscSoneium.sol';
 import {MiscPlasma} from 'aave-address-book/MiscPlasma.sol';
 import {MiscCelo} from 'aave-address-book/MiscCelo.sol';
+import {MiscBob} from 'aave-address-book/MiscBob.sol';
 
 import './GovBaseScript.sol';
 
@@ -353,7 +355,7 @@ contract Plasma is BaseInitialDeployment {
 
 contract Bob is BaseInitialDeployment {
   function GUARDIAN() public pure override returns (address) {
-    return 0x19CE4363FEA478Aa04B9EA2937cc5A2cbcD44be6;
+    return GovernanceV3Bob.GOVERNANCE_GUARDIAN;
   }
 
   function TRANSACTION_NETWORK() public pure override returns (uint256) {
@@ -361,10 +363,10 @@ contract Bob is BaseInitialDeployment {
   }
 
   function PROXY_FACTORY() public pure override returns (address) {
-    return 0xEB0682d148e874553008730f0686ea89db7DA412;
+    return MiscBob.TRANSPARENT_PROXY_FACTORY;
   }
 
   function CROSS_CHAIN_CONTROLLER() public pure override returns (address) {
-    return 0xf630C8A7bC033FD20fcc45d8B43bFe92dE73154F;
+    return GovernanceV3Bob.CROSS_CHAIN_CONTROLLER;
   }
 }
