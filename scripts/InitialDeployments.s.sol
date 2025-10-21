@@ -370,3 +370,17 @@ contract Bob is BaseInitialDeployment {
     return GovernanceV3Bob.CROSS_CHAIN_CONTROLLER;
   }
 }
+
+contract Xlayer is BaseInitialDeployment {
+  function TRANSACTION_NETWORK() public pure override returns (uint256) {
+    return ChainIds.XLAYER;
+  }
+
+  function PROXY_FACTORY() public pure override returns (address) {
+    return 0xEB0682d148e874553008730f0686ea89db7DA412;
+  }
+
+  // function CROSS_CHAIN_CONTROLLER() public pure override returns (address) {
+  //   return address(0);
+  // }
+}

@@ -328,3 +328,13 @@ contract Bob is BaseDeployPayloadsController {
     return ChainIds.ETHEREUM;
   }
 }
+
+contract Xlayer is BaseDeployPayloadsController {
+  function TRANSACTION_NETWORK() public pure override returns (uint256) {
+    return ChainIds.XLAYER;
+  }
+
+  function GOVERNANCE_NETWORK() public pure override returns (uint256) {
+    return ChainIds.ETHEREUM;
+  }
+}

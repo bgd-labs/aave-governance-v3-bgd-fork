@@ -142,3 +142,9 @@ contract Bob is BaseContractHelpers {
     return ChainIds.BOB;
   }
 }
+
+contract Xlayer is BaseContractHelpers {
+  function TRANSACTION_NETWORK() public pure override returns (uint256) {
+    return ChainIds.XLAYER;
+  }
+}
