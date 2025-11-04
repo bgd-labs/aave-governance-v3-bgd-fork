@@ -9,14 +9,13 @@ abstract contract UpdateExecutorOwner {
 
   function executor() public pure virtual returns (address);
 
-  function _changeOwner(
-  ) internal {
+  function _changeOwner() internal {
     require(targetOwner() != address(0), 'NEW_OWNER_CANT_BE_0');
     require(executor() != address(0), 'PAYLOADS_CONTROLLER_CANT_BE_0');
 
-      if (Ownable(executor()).owner() != targetOwner()) {
-        Ownable(executor()).transferOwnership(targetOwner());
-      }
+    if (Ownable(executor()).owner() != targetOwner()) {
+      Ownable(executor()).transferOwnership(targetOwner());
+    }
   }
 }
 
@@ -28,15 +27,14 @@ contract UpdateExecutorPermissionsMantle is UpdateExecutorOwner {
   function executor() public pure override returns (address) {
     return 0x70884634D0098782592111A2A6B8d223be31CB7b; // Executor Lvl 1
   }
-
 }
 
 contract Mantle is Script, UpdateExecutorPermissionsMantle {
   function run() external {
     vm.startBroadcast();
-    
+
     _changeOwner();
-    
+
     vm.stopBroadcast();
   }
 }
@@ -49,7 +47,6 @@ contract UpdateExecutorPermissionsSoneium is UpdateExecutorOwner {
   function executor() public pure override returns (address) {
     return 0x47aAdaAE1F05C978E6aBb7568d11B7F6e0FC4d6A; // Executor Lvl 1
   }
-
 }
 
 contract Soneium is Script, UpdateExecutorPermissionsSoneium {
@@ -57,11 +54,10 @@ contract Soneium is Script, UpdateExecutorPermissionsSoneium {
     vm.startBroadcast();
 
     _changeOwner();
-    
+
     vm.stopBroadcast();
   }
 }
-
 
 contract UpdateExecutorPermissionsPlasma is UpdateExecutorOwner {
   function targetOwner() public pure override returns (address) {
@@ -71,7 +67,6 @@ contract UpdateExecutorPermissionsPlasma is UpdateExecutorOwner {
   function executor() public pure override returns (address) {
     return 0x47aAdaAE1F05C978E6aBb7568d11B7F6e0FC4d6A; // Executor Lvl 1
   }
-
 }
 
 contract Plasma is Script, UpdateExecutorPermissionsPlasma {
@@ -79,7 +74,7 @@ contract Plasma is Script, UpdateExecutorPermissionsPlasma {
     vm.startBroadcast();
 
     _changeOwner();
-    
+
     vm.stopBroadcast();
   }
 }
@@ -91,5 +86,25 @@ contract UpdateExecutorPermissionsBob is UpdateExecutorOwner {
 
   function executor() public pure override returns (address) {
     return 0x90800d1F54384523723eD3962c7Cd59d7866c83d; // Executor Lvl 1
+  }
+}
+
+contract UpdateExecutorPermissionsXlayer is UpdateExecutorOwner {
+  function targetOwner() public pure override returns (address) {
+    return 0x80e11cB895a23C901a990239E5534054C66476B5; // PC
+  }
+
+  function executor() public pure override returns (address) {
+    return 0xE2E8Badc5d50f8a6188577B89f50701cDE2D4e19; // Executor Lvl 1
+  }
+}
+
+contract Xlayer is Script, UpdateExecutorPermissionsXlayer {
+  function run() external {
+    vm.startBroadcast();
+
+    _changeOwner();
+
+    vm.stopBroadcast();
   }
 }
