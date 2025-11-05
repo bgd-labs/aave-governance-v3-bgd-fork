@@ -380,7 +380,7 @@ contract Xlayer is BaseInitialDeployment {
     return 0xEB0682d148e874553008730f0686ea89db7DA412;
   }
 
-  // function CROSS_CHAIN_CONTROLLER() public pure override returns (address) {
-  //   return address(0);
-  // }
+  function CROSS_CHAIN_CONTROLLER() public pure override returns (address) {
+    return 0xFdd46155fD3DA5B907AD3B9f9395366290f58097;
+  }
 }

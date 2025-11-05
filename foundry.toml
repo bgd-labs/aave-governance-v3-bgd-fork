@@ -64,6 +64,7 @@ ink="${RPC_INK}"
 soneium="${RPC_SONEIUM}"
 plasma="${RPC_PLASMA}"
 bob="${RPC_BOB}"
+xlayer="${RPC_XLAYER}"
 
 [etherscan]
 metis={ key="any", chain=1088, url='https://andromeda-explorer.metis.io/' }
@@ -73,6 +74,7 @@ mantle-testnet={key="any", chain=5003, url='https://explorer.testnet.mantle.xyz/
 ink={key="any", chain=57073, url='https://api.routescan.io/v2/network/mainnet/evm/57073/etherscan'}
 soneium={key="any", chain=1868, url='https://soneium.blockscout.com/api/'}
 bob={key="${ETHERSCAN_API_KEY_BOB}", chain=60808, url='https://explorer.gobob.xyz/api/'}
+xlayer={key="any", chain=196, url='https://www.oklink.com/api/v5/explorer/contract/verify-source-code-plugin/xlayer'}
 
 
 

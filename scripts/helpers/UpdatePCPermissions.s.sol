@@ -169,3 +169,34 @@ contract Plasma is Script, UpdatePCPermissionsPlasma {
     vm.stopBroadcast();
   }
 }
+
+contract UpdatePCPermissionsXlayer is UpdatePayloadsControllerPermissions {
+  function targetOwner() public pure override returns (address) {
+    return 0xE2E8Badc5d50f8a6188577B89f50701cDE2D4e19; // Executor Lvl 1
+  }
+
+  function targetGovernanceGuardian() public pure override returns (address) {
+    return 0xeB55A63bf9993d80c86D47f819B5eC958c7C127B;
+  }
+
+  function govContractsToUpdate()
+    public
+    pure
+    override
+    returns (address[] memory)
+  {
+    address[] memory contracts = new address[](1);
+    contracts[0] = address(0x80e11cB895a23C901a990239E5534054C66476B5); // PC
+    return contracts;
+  }
+}
+
+contract Xlayer is Script, UpdatePCPermissionsXlayer {
+  function run() external {
+    vm.startBroadcast();
+
+    _changeOwnerAndGuardian();
+
+    vm.stopBroadcast();
+  }
+}
