@@ -108,3 +108,23 @@ contract Xlayer is Script, UpdateExecutorPermissionsXlayer {
     vm.stopBroadcast();
   }
 }
+
+contract UpdateExecutorPermissionsMegaEth is UpdateExecutorOwner {
+  function targetOwner() public pure override returns (address) {
+    return address(0); // Executor Lvl 1 // TODO: fill with correct address
+  }
+
+  function executor() public pure override returns (address) {
+    return address(0); // TODO: fill with correct address
+  }
+}
+
+contract MegaEth is Script, UpdateExecutorPermissionsMegaEth {
+  function run() external {
+    vm.startBroadcast();
+
+    _changeOwner();
+
+    vm.stopBroadcast();
+  }
+}

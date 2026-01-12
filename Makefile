@@ -40,7 +40,7 @@ endef
 # ----------------------------------------------------------------------------------------------------------------------
 # ----------------------------------------- DEPLOYMENT SCRIPTS ---------------------------------------------------------
 deploy-initial:
-	$(call deploy_fn,InitialDeployments,xlayer)
+	$(call deploy_fn,InitialDeployments,megaeth)
 
 deploy-gov-power-strategy:
 	$(call deploy_fn,Governance/Deploy_Gov_PowerStrategy,ethereum)
@@ -67,14 +67,14 @@ set-vm-as-ccf-sender:
 	$(call deploy_fn,VotingMachine/Set_VM_as_CCF_Sender,ethereum avalanche polygon)
 
 deploy-executor-lvl1:
-	$(call deploy_fn,Payloads/Deploy_ExecutorLvl1,xlayer)
+	$(call deploy_fn,Payloads/Deploy_ExecutorLvl1,megaeth)
 
 deploy-executor-lvl2:
 	$(call deploy_fn,Payloads/Deploy_ExecutorLvl2,ethereum)
 
 ## Deploy execution chain contracts
 deploy-payloads-controller-chain:
-	$(call deploy_fn,Payloads/Deploy_PayloadsController,xlayer)
+	$(call deploy_fn,Payloads/Deploy_PayloadsController,megaeth)
 
 ## Deploy Governance Voting Portal
 deploy-voting-portals:
@@ -90,7 +90,7 @@ set-vp-as_ccf-senders:
 
 ## Deploy Contract Helpers
 deploy-helper-contracts:
-	$(call deploy_fn,Deploy_ContractHelpers,xlayer)
+	$(call deploy_fn,Deploy_ContractHelpers,megaeth)
 
 ## Deployed permissioned payloads controller
 deploy-permissioned-executor:
@@ -127,10 +127,10 @@ create-proposal:
 	$(call deploy_fn,helpers/CreateProposal,ethereum)
 
 update-pc-permissions:
-	$(call deploy_fn,helpers/UpdatePCPermissions,xlayer)
+	$(call deploy_fn,helpers/UpdatePCPermissions,megaeth)
 
 update-executor-owner:
-	$(call deploy_fn,helpers/UpdateExecutorOwner,xlayer)
+	$(call deploy_fn,helpers/UpdateExecutorOwner,megaeth)
 
 deploy-merkle-payload-updates:
 	$(call deploy_fn,GovernancePayloads/MerklePayloadUpdates,ethereum)

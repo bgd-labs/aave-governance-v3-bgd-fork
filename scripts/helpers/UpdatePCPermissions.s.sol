@@ -2,7 +2,10 @@
 pragma solidity ^0.8.0;
 
 import 'forge-std/Script.sol';
-import {OwnableWithGuardian, IWithGuardian} from 'solidity-utils/contracts/access-control/OwnableWithGuardian.sol';
+import {
+  OwnableWithGuardian,
+  IWithGuardian
+} from 'solidity-utils/contracts/access-control/OwnableWithGuardian.sol';
 
 abstract contract UpdatePayloadsControllerPermissions {
   function targetOwner() public pure virtual returns (address);
@@ -30,7 +33,6 @@ abstract contract UpdatePayloadsControllerPermissions {
           IWithGuardian(contracts[i]).updateGuardian(guardian);
         }
       } catch {}
-
       if (contractWithAC.owner() != owner) {
         contractWithAC.transferOwnership(owner);
       }
@@ -192,6 +194,37 @@ contract UpdatePCPermissionsXlayer is UpdatePayloadsControllerPermissions {
 }
 
 contract Xlayer is Script, UpdatePCPermissionsXlayer {
+  function run() external {
+    vm.startBroadcast();
+
+    _changeOwnerAndGuardian();
+
+    vm.stopBroadcast();
+  }
+}
+
+contract UpdatePCPermissionsMegaEth is UpdatePayloadsControllerPermissions {
+  function targetOwner() public pure override returns (address) {
+    return address(0); // Executor Lvl 1 // TODO: fill with correct address
+  }
+
+  function targetGovernanceGuardian() public pure override returns (address) {
+    return address(0); // TODO: fill with correct address
+  }
+
+  function govContractsToUpdate()
+    public
+    pure
+    override
+    returns (address[] memory)
+  {
+    address[] memory contracts = new address[](1);
+    contracts[0] = address(0); // PC // TODO: fill with correct address
+    return contracts;
+  }
+}
+
+contract MegaEth is Script, UpdatePCPermissionsMegaEth {
   function run() external {
     vm.startBroadcast();
 

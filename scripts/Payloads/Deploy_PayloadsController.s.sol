@@ -338,3 +338,13 @@ contract Xlayer is BaseDeployPayloadsController {
     return ChainIds.ETHEREUM;
   }
 }
+
+contract MegaEth is BaseDeployPayloadsController {
+  function TRANSACTION_NETWORK() public pure override returns (uint256) {
+    return ChainIds.MEGAETH;
+  }
+
+  function GOVERNANCE_NETWORK() public pure override returns (uint256) {
+    return ChainIds.ETHEREUM;
+  }
+}

@@ -148,3 +148,9 @@ contract Xlayer is BaseContractHelpers {
     return ChainIds.XLAYER;
   }
 }
+
+contract MegaEth is BaseContractHelpers {
+  function TRANSACTION_NETWORK() public pure override returns (uint256) {
+    return ChainIds.MEGAETH;
+  }
+}
