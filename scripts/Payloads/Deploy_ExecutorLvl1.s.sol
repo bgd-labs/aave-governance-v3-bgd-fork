@@ -141,3 +141,9 @@ contract Xlayer is BaseDeployExecutorLvl1 {
     return ChainIds.XLAYER;
   }
 }
+
+contract MegaEth is BaseDeployExecutorLvl1 {
+  function TRANSACTION_NETWORK() public pure override returns (uint256) {
+    return ChainIds.MEGAETH;
+  }
+}

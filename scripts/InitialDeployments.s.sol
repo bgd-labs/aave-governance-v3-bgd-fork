@@ -3,7 +3,9 @@ pragma solidity ^0.8.0;
 
 import {GovernanceV3Ethereum} from 'aave-address-book/GovernanceV3Ethereum.sol';
 import {GovernanceV3Polygon} from 'aave-address-book/GovernanceV3Polygon.sol';
-import {GovernanceV3Avalanche} from 'aave-address-book/GovernanceV3Avalanche.sol';
+import {
+  GovernanceV3Avalanche
+} from 'aave-address-book/GovernanceV3Avalanche.sol';
 import {GovernanceV3Optimism} from 'aave-address-book/GovernanceV3Optimism.sol';
 import {GovernanceV3Arbitrum} from 'aave-address-book/GovernanceV3Arbitrum.sol';
 import {GovernanceV3Metis} from 'aave-address-book/GovernanceV3Metis.sol';
@@ -382,5 +384,19 @@ contract Xlayer is BaseInitialDeployment {
 
   function CROSS_CHAIN_CONTROLLER() public pure override returns (address) {
     return 0xFdd46155fD3DA5B907AD3B9f9395366290f58097;
+  }
+}
+
+contract MegaEth is BaseInitialDeployment {
+  function TRANSACTION_NETWORK() public pure override returns (uint256) {
+    return ChainIds.MEGAETH;
+  }
+
+  function PROXY_FACTORY() public pure override returns (address) {
+    return 0xEB0682d148e874553008730f0686ea89db7DA412;
+  }
+
+  function CROSS_CHAIN_CONTROLLER() public pure override returns (address) {
+    return address(0); // TODO: fill with correct address
   }
 }
