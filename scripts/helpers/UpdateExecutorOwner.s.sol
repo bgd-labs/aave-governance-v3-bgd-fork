@@ -111,11 +111,11 @@ contract Xlayer is Script, UpdateExecutorPermissionsXlayer {
 
 contract UpdateExecutorPermissionsMegaEth is UpdateExecutorOwner {
   function targetOwner() public pure override returns (address) {
-    return address(0); // Executor Lvl 1 // TODO: fill with correct address
+    return 0x80e11cB895a23C901a990239E5534054C66476B5; // PC
   }
 
   function executor() public pure override returns (address) {
-    return address(0); // TODO: fill with correct address
+    return 0xE2E8Badc5d50f8a6188577B89f50701cDE2D4e19; // Executor Lvl 1
   }
 }
 

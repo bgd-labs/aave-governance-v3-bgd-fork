@@ -205,11 +205,11 @@ contract Xlayer is Script, UpdatePCPermissionsXlayer {
 
 contract UpdatePCPermissionsMegaEth is UpdatePayloadsControllerPermissions {
   function targetOwner() public pure override returns (address) {
-    return address(0); // Executor Lvl 1 // TODO: fill with correct address
+    return 0xE2E8Badc5d50f8a6188577B89f50701cDE2D4e19; // Executor Lvl 1
   }
 
   function targetGovernanceGuardian() public pure override returns (address) {
-    return address(0); // TODO: fill with correct address
+    return 0x5a578ee1dA2c798Be60036AdDD223Ac164d948Af;
   }
 
   function govContractsToUpdate()
@@ -219,7 +219,7 @@ contract UpdatePCPermissionsMegaEth is UpdatePayloadsControllerPermissions {
     returns (address[] memory)
   {
     address[] memory contracts = new address[](1);
-    contracts[0] = address(0); // PC // TODO: fill with correct address
+    contracts[0] = 0x80e11cB895a23C901a990239E5534054C66476B5; // PC
     return contracts;
   }
 }
