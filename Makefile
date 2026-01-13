@@ -16,6 +16,7 @@ custom_metis-testnet := --legacy --verifier-url https://goerli.explorer.metisdev
 custom_metis := --verifier-url https://andromeda-explorer.metis.io/api/
 custom_zksync := --zksync
 custom_zksync-testnet := --legacy --zksync
+custom_megaEth := --skip-simulation
 
 # params:
 #  1 - path/file_name
@@ -40,7 +41,7 @@ endef
 # ----------------------------------------------------------------------------------------------------------------------
 # ----------------------------------------- DEPLOYMENT SCRIPTS ---------------------------------------------------------
 deploy-initial:
-	$(call deploy_fn,InitialDeployments,megaeth)
+	$(call deploy_fn,InitialDeployments,megaEth)
 
 deploy-gov-power-strategy:
 	$(call deploy_fn,Governance/Deploy_Gov_PowerStrategy,ethereum)
@@ -67,14 +68,14 @@ set-vm-as-ccf-sender:
 	$(call deploy_fn,VotingMachine/Set_VM_as_CCF_Sender,ethereum avalanche polygon)
 
 deploy-executor-lvl1:
-	$(call deploy_fn,Payloads/Deploy_ExecutorLvl1,megaeth)
+	$(call deploy_fn,Payloads/Deploy_ExecutorLvl1,megaEth)
 
 deploy-executor-lvl2:
 	$(call deploy_fn,Payloads/Deploy_ExecutorLvl2,ethereum)
 
 ## Deploy execution chain contracts
 deploy-payloads-controller-chain:
-	$(call deploy_fn,Payloads/Deploy_PayloadsController,megaeth)
+	$(call deploy_fn,Payloads/Deploy_PayloadsController,megaEth)
 
 ## Deploy Governance Voting Portal
 deploy-voting-portals:
@@ -90,7 +91,7 @@ set-vp-as_ccf-senders:
 
 ## Deploy Contract Helpers
 deploy-helper-contracts:
-	$(call deploy_fn,Deploy_ContractHelpers,megaeth)
+	$(call deploy_fn,Deploy_ContractHelpers,megaEth)
 
 ## Deployed permissioned payloads controller
 deploy-permissioned-executor:
@@ -127,10 +128,10 @@ create-proposal:
 	$(call deploy_fn,helpers/CreateProposal,ethereum)
 
 update-pc-permissions:
-	$(call deploy_fn,helpers/UpdatePCPermissions,megaeth)
+	$(call deploy_fn,helpers/UpdatePCPermissions,megaEth)
 
 update-executor-owner:
-	$(call deploy_fn,helpers/UpdateExecutorOwner,megaeth)
+	$(call deploy_fn,helpers/UpdateExecutorOwner,megaEth)
 
 deploy-merkle-payload-updates:
 	$(call deploy_fn,GovernancePayloads/MerklePayloadUpdates,ethereum)
