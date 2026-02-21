@@ -34,7 +34,7 @@ contract PermissionedPayloadsController is
     initializer
   {
     PayloadsControllerCore.initialize(owner, guardian, executors);
-    _updatePayloadsManager(initialPayloadsManager);
+    _grantRole(PAYLOADS_MANAGER_ROLE, initialPayloadsManager);
   }
 
   /// @inheritdoc IPayloadsControllerCore

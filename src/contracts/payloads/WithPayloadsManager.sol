@@ -3,6 +3,8 @@ pragma solidity ^0.8.0;
 
 import {IWithPayloadsManager} from './interfaces/IWithPayloadsManager.sol';
 import {OwnableWithGuardian} from 'aave-delivery-infrastructure/contracts/old-oz/OwnableWithGuardian.sol';
+import {AccessControlEnumerable} from 'openzeppelin-contracts/contracts/access/extensions/AccessControlEnumerable.sol';
+import {WithPayloadsManagerLegacyStorage} from './WithPayloadsManagerLegacyStorage.sol';
 import {Errors} from '../libraries/Errors.sol';
 
 /**
@@ -11,47 +13,42 @@ import {Errors} from '../libraries/Errors.sol';
  * @dev Contract module which provides a basic access control mechanism, where
  * there are accounts (owner, guardian, and payloads manager) which can be granted
  * exclusive access to specific functions.
- * @notice By default, all the roles will be assigned to the one that deploys the contract. This
+ * @notice By default, all the roles (owner, guardian, payloadsManager) will be assigned to the one that deploys the contract. This
  * can later be changed with appropriate functions.
  */
-contract WithPayloadsManager is OwnableWithGuardian, IWithPayloadsManager {
-  address private _payloadsManager;
+contract WithPayloadsManager is OwnableWithGuardian, IWithPayloadsManager, WithPayloadsManagerLegacyStorage, AccessControlEnumerable {
+  /// @inheritdoc IWithPayloadsManager
+  bytes32 public constant PAYLOADS_MANAGER_ROLE = keccak256('PAYLOADS_MANAGER');
 
   constructor() {
-    _updatePayloadsManager(_msgSender());
+    _grantRole(PAYLOADS_MANAGER_ROLE, _msgSender());
   }
 
   modifier onlyPayloadsManager() {
-    require(_msgSender() == payloadsManager(), Errors.ONLY_BY_PAYLOADS_MANAGER);
+    require(hasRole(PAYLOADS_MANAGER_ROLE, _msgSender()), Errors.ONLY_BY_PAYLOADS_MANAGER);
     _;
   }
 
   modifier onlyPayloadsManagerOrGuardian() {
     require(
-      _msgSender() == payloadsManager() || _msgSender() == guardian(),
+      hasRole(PAYLOADS_MANAGER_ROLE, _msgSender()) || _msgSender() == guardian(),
       Errors.ONLY_BY_PAYLOADS_MANAGER_OR_GUARDIAN
     );
     _;
   }
 
   /// @inheritdoc IWithPayloadsManager
-  function payloadsManager() public view returns (address) {
-    return _payloadsManager;
+  function addPayloadsManager(address payloadsManager) external onlyOwner {
+    _grantRole(PAYLOADS_MANAGER_ROLE, payloadsManager);
   }
 
   /// @inheritdoc IWithPayloadsManager
-  function updatePayloadsManager(
-    address newPayloadsManager
-  ) external onlyOwner {
-    _updatePayloadsManager(newPayloadsManager);
+  function removePayloadsManager(address payloadsManager) external onlyOwner {
+    _revokeRole(PAYLOADS_MANAGER_ROLE, payloadsManager);
   }
 
-  /**
-   * @dev updates the address of the payloads manager
-   * @param newPayloadsManager the new address of the payloads manager.
-   */
-  function _updatePayloadsManager(address newPayloadsManager) internal {
-    _payloadsManager = newPayloadsManager;
-    emit PayloadsManagerUpdated(newPayloadsManager);
+  /// @inheritdoc IWithPayloadsManager
+  function isPayloadsManager(address payloadsManager) external view returns (bool) {
+    return hasRole(PAYLOADS_MANAGER_ROLE, payloadsManager);
   }
 }

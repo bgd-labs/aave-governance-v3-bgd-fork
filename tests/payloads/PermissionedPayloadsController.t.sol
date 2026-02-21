@@ -76,7 +76,7 @@ contract PermissionedPayloadsControllerTest is Test {
     address payloadsManager,
     address origin
   ) external initializeTest(admin, guardian, payloadsManager, origin) {
-    assertEq(permissionedPayloadPortal.payloadsManager(), payloadsManager);
+    assertTrue(permissionedPayloadPortal.isPayloadsManager(payloadsManager));
   }
 
   function testPayloadsCreationWithInvalidCaller(
@@ -99,6 +99,22 @@ contract PermissionedPayloadsControllerTest is Test {
     address origin
   ) external initializeTest(admin, guardian, payloadsManager, origin) {
     _createPayload(payloadsManager);
+  }
+
+  function testPayloadsCreationMultiplePayloadsManager(
+    address admin,
+    address guardian,
+    address initialPayloadsManager,
+    address anotherPayloadsManager,
+    address origin
+  ) external initializeTest(admin, guardian, initialPayloadsManager, origin) {
+    vm.assume(initialPayloadsManager != anotherPayloadsManager);
+    vm.startPrank(Ownable(address(permissionedPayloadPortal)).owner());
+    permissionedPayloadPortal.addPayloadsManager(anotherPayloadsManager);
+    vm.stopPrank();
+
+    _createPayload(initialPayloadsManager);
+    _createPayload(anotherPayloadsManager);
   }
 
   function testPayloadTimeLockNotExceeded(
@@ -175,6 +191,26 @@ contract PermissionedPayloadsControllerTest is Test {
     vm.stopPrank();
   }
 
+  function testPayloadCancellationWithAnotherPayloadsManager(
+    address admin,
+    address guardian,
+    address payloadsManager,
+    address anotherPayloadsManager,
+    address origin
+  ) external initializeTest(admin, guardian, payloadsManager, origin) {
+    vm.assume(payloadsManager != anotherPayloadsManager);
+
+    uint40 payloadId = _createPayload(payloadsManager);
+
+    vm.startPrank(Ownable(address(permissionedPayloadPortal)).owner());
+    permissionedPayloadPortal.addPayloadsManager(anotherPayloadsManager);
+    vm.stopPrank();
+
+    vm.startPrank(anotherPayloadsManager);
+    permissionedPayloadPortal.cancelPayload(payloadId);
+    vm.stopPrank();
+  }
+
   function testUpdateExecutorsNotAvailable(
     address admin,
     address guardian,
@@ -234,7 +270,7 @@ contract PermissionedPayloadsControllerTest is Test {
     permissionedPayloadPortal.setExecutionDelay(newDelay);
   }
 
-  function testUpdatePayloadsManagerWithOwner(
+  function testAddPayloadsManagerWithOwner(
     address admin,
     address guardian,
     address payloadsManager,
@@ -243,14 +279,13 @@ contract PermissionedPayloadsControllerTest is Test {
     address newPayloadsManager = address(555);
 
     vm.startPrank(Ownable(address(permissionedPayloadPortal)).owner());
-    permissionedPayloadPortal.updatePayloadsManager(newPayloadsManager);
+    permissionedPayloadPortal.addPayloadsManager(newPayloadsManager);
     vm.stopPrank();
 
-    address currentPayloadsManager = permissionedPayloadPortal.payloadsManager();
-    assertEq(currentPayloadsManager, newPayloadsManager, 'Payloads Manager was not set correctly');
+    assertTrue(permissionedPayloadPortal.isPayloadsManager(newPayloadsManager), 'Payloads Manager was not set correctly');
   }
 
-  function testUpdatePayloadsManagerWithInvalidCaller(
+  function testAddPayloadsManagerWithInvalidCaller(
     address admin,
     address guardian,
     address payloadsManager,
@@ -260,7 +295,33 @@ contract PermissionedPayloadsControllerTest is Test {
 
     vm.assume(origin != Ownable(address(permissionedPayloadPortal)).owner());
     vm.expectRevert(bytes(abi.encodeWithSelector(Ownable.OwnableUnauthorizedAccount.selector, origin)));
-    permissionedPayloadPortal.updatePayloadsManager(newPayloadsManager);
+    permissionedPayloadPortal.addPayloadsManager(newPayloadsManager);
+  }
+
+  function testRemovePayloadsManagerWithOwner(
+    address admin,
+    address guardian,
+    address payloadsManager,
+    address origin
+  ) external initializeTest(admin, guardian, payloadsManager, origin) {
+    vm.startPrank(Ownable(address(permissionedPayloadPortal)).owner());
+    permissionedPayloadPortal.removePayloadsManager(payloadsManager);
+    vm.stopPrank();
+
+    assertFalse(permissionedPayloadPortal.isPayloadsManager(payloadsManager), 'Payloads Manager was not removed correctly');
+  }
+
+  function testRemovePayloadsManagerWithInvalidCaller(
+    address admin,
+    address guardian,
+    address payloadsManager,
+    address origin
+  ) external initializeTest(admin, guardian, payloadsManager, origin) {
+    address newPayloadsManager = address(555);
+
+    vm.assume(origin != Ownable(address(permissionedPayloadPortal)).owner());
+    vm.expectRevert(bytes(abi.encodeWithSelector(Ownable.OwnableUnauthorizedAccount.selector, origin)));
+    permissionedPayloadPortal.addPayloadsManager(newPayloadsManager);
   }
 
   function _createPayload(address caller) internal returns (uint40) {

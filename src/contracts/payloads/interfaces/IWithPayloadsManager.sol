@@ -4,23 +4,33 @@ pragma solidity ^0.8.0;
 /**
  * @title IWithPayloadsManager
  * @author BGD Labs
- * @notice interface containing the objects, events and methods definitions of the IWithPayloadsManager contract
+ * @notice interface containing the methods definitions of the IWithPayloadsManager contract
  */
 interface IWithPayloadsManager {
   /**
-   * @notice Emitted when the payload manager gets updated.
-   * @param newPayloadsManager The address of the new payload manager.
+   * @notice Returns the identifier of the PayloadsManager role
+   * @return The id of the PayloadsManager role
    */
-  event PayloadsManagerUpdated(address newPayloadsManager);
+  function PAYLOADS_MANAGER_ROLE() external view returns (bytes32);
 
   /**
-   * @notice method to get payload manager address;
+   * @notice Grants the PayloadsManager role to the given address
+   * @dev Only callable by the contract owner
+   * @param payloadsManager The address to be granted the PayloadsManager role
    */
-  function payloadsManager() external view returns(address);
+  function addPayloadsManager(address payloadsManager) external;
 
   /**
-   * @notice method to update payload manager.
-   * @param newPayloadsManager The new payload manager address.
+   * @notice Revokes the PayloadsManager role from the given address
+   * @dev Only callable by the contract owner
+   * @param payloadsManager The address to have the PayloadsManager role removed
    */
-  function updatePayloadsManager(address newPayloadsManager) external;
+  function removePayloadsManager(address payloadsManager) external;
+
+  /**
+   * @notice Checks whether the given address holds the PayloadsManager role
+   * @param payloadsManager The address to check
+   * @return True if the address has the PayloadsManager role, false otherwise
+   */
+  function isPayloadsManager(address payloadsManager) external view returns (bool);
 }
